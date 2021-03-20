@@ -6,7 +6,8 @@ import {
   SignUp, 
   Dashboard,
   Splash,
-  Chat, 
+  Chat,
+  SearchUser, 
   } from '../container';
 import {color} from '../utility';
 import ShowFullImg from '../container/ShowFullImg';
@@ -39,6 +40,7 @@ const NavContainer = () => {
           <Stack.Screen name="Dashboard" component={Dashboard} options={{headerLeft: null}}/>
           <Stack.Screen name="ShowFullImg" component={ShowFullImg} options={{headerBackTitle: null}}/>
           <Stack.Screen name="Chat" component={Chat} options={{headerBackTitle: null}}/>
+          <Stack.Screen name="SearchUser" component={SearchUser} options={{headerBackTitle: null}}/>
           
          
           

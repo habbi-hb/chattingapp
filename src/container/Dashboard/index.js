@@ -2,15 +2,24 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useLayoutEffect } from 'react';
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import  ImagePicker from 'react-native-image-picker';
-import {View, Alert, SafeAreaView, FlatList } from 'react-native'
+import {View,
+   Alert,
+   SafeAreaView,
+   FlatList, 
+   Text,
+   Keyboard, 
+   KeyboardAvoidingView,
+   TouchableWithoutFeedback,
+   TouchableOpacity,
+   } from 'react-native'
 import { color, globalStyle } from '../../utility';
 import { Store } from "../../context/store";
 import { LOADING_STOP, LOADING_START } from "../../context/actions/type";
-import { uuid,smallDeviceHeight } from "../../utility/constants";
+import { uuid,smallDeviceHeight, keyboardVerticalOffset } from "../../utility/constants";
 
 import { deviceHeight } from "../../utility/styleHelper/appStyle";
 import { LogOutUser, UpdateUser } from "../../network";
-import {Profile, ShowUsers, StickyHeader} from '../../component'
+import {InputField, Profile, ShowUsers, StickyHeader} from '../../component'
 import { clearAsyncStroage } from "../../asyncStroage";
 import firebase from "../../firebase/config";
 
@@ -23,6 +32,9 @@ const Dashboard = ({navigation}) => {
  const globalState = useContext(Store);
   const { dispatchLoaderAction } = globalState;
 
+
+
+
   const [userDetail, setUserDetail] = useState({
     id: "",
     name: "",
@@ -30,7 +42,9 @@ const Dashboard = ({navigation}) => {
   });
   const [getScrollPosition, setScrollPosition] = useState(0);
   const [allUsers, setAllUsers] = useState([]);
+  const [Friend, setFriends] = useState([]);
   const { profileImg, name } = userDetail;
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -89,7 +103,31 @@ const Dashboard = ({navigation}) => {
             }
           });
           setUserDetail(currentUser);
-          setAllUsers(users);
+            setAllUsers(users);
+           let ary =[];
+            for(let v=0; v<users.length; v++)
+            {
+              console.log("user id",users[v].id);             
+              if("tlyi2QIn6Rfw1wvPMMCa60CquBY2"=='tlyi2QIn6Rfw1wvPM0CquBY2')
+              {
+        
+                ary[v]=users[v]
+              }
+            }
+            setFriends(ary)
+            console.log("current id",currentUser.id);
+   
+          let array =[]; 
+          for (let i=0; i<allUsers.length; i++)
+          {
+           
+            array[i]=allUsers[i].name
+
+          }
+         
+      
+         
+          
           dispatchLoaderAction({
             type: LOADING_STOP,
           });
@@ -101,6 +139,9 @@ const Dashboard = ({navigation}) => {
       });
     }
   }, []);
+
+
+
 
   const selectPhotoTapped = () => {
     const options = {
@@ -197,7 +238,13 @@ const Dashboard = ({navigation}) => {
       return deviceHeight / 6;
     }
   };
+  
+
+
+
   return (
+   
+  
     <SafeAreaView style={{ flex: 1, backgroundColor: color.BLACK }}>
       {getScrollPosition > getOpacity() && (
         <StickyHeader
@@ -208,9 +255,13 @@ const Dashboard = ({navigation}) => {
       )}
 
       {/* ALL USERS */}
-      <FlatList
+      
+   
+
+
+<FlatList
         alwaysBounceVertical={false}
-        data={allUsers}
+        data={Friend}
         keyExtractor={(_, index) => index.toString()}
         onScroll={(event) =>
           setScrollPosition(event.nativeEvent.contentOffset.y)
@@ -241,7 +292,31 @@ const Dashboard = ({navigation}) => {
           />
         )}
       />
+
+
+    
+      
+    
+           <TouchableOpacity 
+           onPress={()=>navigation.navigate('SearchUser')}
+            style={{ 
+                    position: 'absolute',
+                  zIndex: 11,
+                  right: 20,
+                  bottom:20,
+                  backgroundColor: '#fff',
+                  width: 60,
+                  height: 60,
+                  borderRadius: 50,
+                  alignItems: 'center',
+                  justifyContent:'center',
+                  elevation: 8,}}>
+            <Text style={{ 
+              color: color.BLACK,
+              fontSize: 24,}}>+</Text>
+        </TouchableOpacity>
     </SafeAreaView>
+
   );
 };
 
