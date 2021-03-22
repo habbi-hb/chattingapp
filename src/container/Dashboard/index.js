@@ -94,36 +94,51 @@ const Dashboard = ({navigation}) => {
               currentUser.id = uuid;
               currentUser.name = child.val().name;
               currentUser.profileImg = child.val().profileImg;
-            } else {
+            }
+           // else {
               users.push({
                 id: child.val().uuid,
                 name: child.val().name,
                 profileImg: child.val().profileImg,
               });
-            }
+           // }
           });
           setUserDetail(currentUser);
             setAllUsers(users);
-           let ary =[];
-            for(let v=0; v<users.length; v++)
-            {
-              console.log("user id",users[v].id);             
-              if("tlyi2QIn6Rfw1wvPMMCa60CquBY2"=='tlyi2QIn6Rfw1wvPM0CquBY2')
-              {
-        
-                ary[v]=users[v]
-              }
-            }
-            setFriends(ary)
-            console.log("current id",currentUser.id);
-   
-          let array =[]; 
-          for (let i=0; i<allUsers.length; i++)
-          {
-           
-            array[i]=allUsers[i].name
 
-          }
+
+            firebase
+            .database()
+            .ref("messeges")
+            .on("value", (dataSnapshot) => {
+              console.log(",,,,,,,,,,,,,,,,,",dataSnapshot)
+              
+            
+            });
+     
+
+          //  let ary =[];
+          //   for(let v=0; v<users.length; v++)
+          //   {
+                         
+          //     if(currentUser.id==currentUser.id)
+          //     {
+          //       ary.push({
+          //         id: users[v].uuid,
+          //         name: users[v].name,
+          //         profileImg: users[v].profileImg,
+          //       });
+          //     }
+          //   }
+          //   setFriends(ary)
+   
+          // let array =[]; 
+          // for (let i=0; i<allUsers.length; i++)
+          // {
+           
+          //   array[i]=allUsers[i].name
+
+          // }
          
       
          
